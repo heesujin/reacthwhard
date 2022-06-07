@@ -1,18 +1,36 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./shared/firebase";
 import { loadSnsFB, deleteSnsFB } from "./redux/modules/sns";
 import { useSelector, useDispatch } from "react-redux";
+import { loadFBAccount } from "./redux/modules/sns";
 
 function YesLogin() {
   const dispatch = useDispatch();
   const sns_list = useSelector((state) => state.sns.list);
-
   useEffect(() => {
-    dispatch(loadSnsFB());
+    dispatch(loadSnsFB(), loadFBAccount());
+    // console.log(loadUserFB());
   }, []);
+  const user_list = useSelector((state) => state);
+  console.log(user_list);
+
+  // const [is_login, setIsLogin] = React.useState(false);
+
+  // React.useEffect(() => {
+  //   onAuthStateChanged(auth, loginCheck);
+  // });
+
+  // const loginCheck = async (user) => {
+  //   if (user) {
+  //     setIsLogin(true);
+  //   } else {
+  //     setIsLogin(false);
+  //   }
+  // };
+
   return (
     <div>
       <Upper>

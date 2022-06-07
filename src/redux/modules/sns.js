@@ -1,16 +1,18 @@
-import { db } from "../../shared/firebase";
+import { db, auth } from "../../shared/firebase";
 import {
   collection,
   doc,
-  getDoc,
   getDocs,
   addDoc,
   updateDoc,
   deleteDoc,
+  query,
+  where,
 } from "firebase/firestore";
 
 //Actions type
 const LOAD = "sns/LOAD";
+const LOADES = "user/LOAD";
 const CREATE = "sns/CREATE";
 const UPDATE = "sns/UPDATE";
 const DELETE = "sns/DELETE";
@@ -22,6 +24,9 @@ const init = {
 //Action Creators
 export function loadSns(sns_list) {
   return { type: LOAD, sns_list };
+}
+export function loadAccount(user_list) {
+  return { type: LOADES, user_list };
 }
 
 export function createSns(sns) {
@@ -52,18 +57,18 @@ export const loadSnsFB = () => {
   };
 };
 
-export const loadUserFB = () => {
+export const loadFBAccount = (email) => {
   return async function (dispatch) {
-    const user_data = await getDocs(collection(db, "users"));
+    const a = query(collection(db, "user"), where("email", "==", email));
+    const result = await getDocs(a);
 
-    let user_list = [];
-
-    user_data.forEach((doc) => {
-      // console.log(doc.id, doc.data());
-      user_list.push({ id: doc.id, ...doc.data() });
-
-      dispatch(loadSns(user_list));
+    const account = {};
+    result.forEach((doc) => {
+      account.id = doc.id;
+      account.data = doc.data();
     });
+
+    dispatch(loadAccount(account));
   };
 };
 
@@ -106,6 +111,15 @@ export default function reducer(state = init, action = {}) {
   switch (action.type) {
     case "sns/LOAD": {
       return { list: action.sns_list, is_loaded: true };
+    }
+    case "user/LOAD": {
+      return {
+        islogin: state.isLogin,
+        docId: action.account.id,
+        email: action.account.data.email,
+        name: action.account.data.name,
+        id: action.account.data.id,
+      };
     }
     case "sns/CREATE": {
       const new_sns = [...state.list, action.sns];

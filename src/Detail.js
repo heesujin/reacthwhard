@@ -19,10 +19,10 @@ function Detail() {
       return false;
     }
   });
-  console.log(sns);
+  //   console.log(sns);
 
-  console.log(sns_index);
-  console.log(sns_list);
+  //   console.log(sns_index);
+  //   console.log(sns_list);
 
   useEffect(() => {
     // console.log(loadSnsFB);

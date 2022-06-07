@@ -24,6 +24,7 @@ const Signup = () => {
       user_id: idValue,
       name: nameValue,
     });
+
     console.log(user_data);
   };
   return (
