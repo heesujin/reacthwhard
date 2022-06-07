@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { auth, db, storage } from "./shared/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,9 +8,10 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { addSnsFB } from "./redux/modules/sns";
 
 function Add() {
+  const params = useParams();
   const file_link_ref = React.useRef(null);
   const comment_ref = React.useRef(null);
-
+  const sns_index = params.index;
   const dispatch = useDispatch();
   const date = new Date().toString().split(" ");
   const days = date.reverse().join(" ");
@@ -31,21 +32,6 @@ function Add() {
     console.log(file_url);
     setLink(file_url);
   };
-
-  // const uploadFB = () => {
-  //   let image = file_link_ref.current?.files[0];
-  //   const _upload = storage.ref(`images/${image.name}`).put(image);
-
-  //   //   업로드!
-  //   _upload.then((snapshot) => {
-  //     console.log(snapshot);
-
-  //     // 업로드한 파일의 다운로드 경로를 가져오자!
-  //     snapshot.ref.getDownloadURL().then((url) => {
-  //       console.log(url);
-  //     });
-  //   });
-  // };
 
   const addSns = () => {
     const comment = comment_ref.current;

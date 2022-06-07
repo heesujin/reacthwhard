@@ -5,6 +5,7 @@ import Login from "./Login";
 import Signup from "./Singup";
 import Add from "./Add";
 import YesLogin from "./YesLogin";
+import Detail from "./Detail";
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import {
@@ -45,11 +46,10 @@ function App() {
         ) : (
           <Route path="/" element={<Main />} />
         )}
-
         <Route path="/add" element={<Add />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/modify/:index" element={<Modify />} />
-
+        <Route path="/detail/:index" element={<Detail />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     </div>

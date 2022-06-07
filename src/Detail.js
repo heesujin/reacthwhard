@@ -1,18 +1,34 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "./shared/firebase";
 import { loadSnsFB, deleteSnsFB } from "./redux/modules/sns";
 import { useSelector, useDispatch } from "react-redux";
 
-function YesLogin() {
+function Detail() {
   const dispatch = useDispatch();
   const sns_list = useSelector((state) => state.sns.list);
+  const params = useParams();
+  const sns_index = params.index;
+  const sns = sns_list.filter((index) => {
+    // console.log(index);
+    if (sns_index === index.id) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  console.log(sns);
+
+  console.log(sns_index);
+  console.log(sns_list);
 
   useEffect(() => {
+    // console.log(loadSnsFB);
     dispatch(loadSnsFB());
   }, []);
+
   return (
     <div>
       <Upper>
@@ -42,38 +58,29 @@ function YesLogin() {
           </Link>
         </Login>
       </Upper>
-      {sns_list.map((value, index) => {
-        return (
-          <>
-            <Down key={index}>
-              <Pimg src={require("./Pooh.png")} />
-              <Name>name</Name>
-              <Time>{value.time}</Time>
-              <Link
-                to={"/modify/" + value.id}
-                style={{ textDecoration: "none" }}
-              >
-                <Btn>Modify</Btn>
-              </Link>
-              <Btn
-                onClick={() => {
-                  dispatch(deleteSnsFB(value.id));
-                }}
-              >
-                Delet
-              </Btn>
-            </Down>
-            <Link to={"/detail/" + value.id} style={{ textDecoration: "none" }}>
-              <Downs>
-                <Nimg src={value.img} />
-                <Texts>
-                  <Comments>{value.comments} </Comments>
-                </Texts>
-              </Downs>
-            </Link>
-          </>
-        );
-      })}
+
+      <Down>
+        <Pimg src={require("./Pooh.png")} />
+        <Name>name</Name>
+        <Time>{sns[0].time}</Time>
+        <Link to={"/modify/" + sns_index} style={{ textDecoration: "none" }}>
+          <Btn>Modify</Btn>
+        </Link>
+        <Btn
+          onClick={() => {
+            dispatch(deleteSnsFB(sns[0].id));
+          }}
+        >
+          Delete
+        </Btn>
+      </Down>
+
+      <Downs>
+        <Nimg src={sns[0].img} />
+        <Texts>
+          <Comments>{sns[0].comments}</Comments>
+        </Texts>
+      </Downs>
     </div>
   );
 }
@@ -222,8 +229,6 @@ const Texts = styled.div`
 const Comments = styled.p`
   min-width: 450px;
   max-width: 450px;
-  text-decoration: none;
-  color: black;
 `;
 
 const Btn = styled.button`
@@ -237,4 +242,4 @@ const Btn = styled.button`
   border: none;
 `;
 
-export default YesLogin;
+export default Detail;

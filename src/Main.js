@@ -40,16 +40,16 @@ function Main() {
               {/* {user_list.map((v, i) => { */}
               <Name>name</Name>
               {/* })} */}
-              <Time>{time}</Time>
+              <Time>{value.time}</Time>
             </Down>
-            <Link to={"/main"} style={{ textDecoration: "none" }}>
-              <Downs>
-                <Nimg src={value.img} key={index} />
-                <Texts>
-                  <Comments>{value.comments}</Comments>
-                </Texts>
-              </Downs>
-            </Link>
+            {/* <Link to={"/Detial"} style={{ textDecoration: "none" }}> */}
+            <Downs>
+              <Nimg src={value.img} key={index} />
+              <Texts>
+                <Comments>{value.comments}</Comments>
+              </Texts>
+            </Downs>
+            {/* </Link> */}
           </>
         );
       })}
