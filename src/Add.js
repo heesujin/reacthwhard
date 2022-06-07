@@ -10,8 +10,14 @@ import { addSnsFB } from "./redux/modules/sns";
 function Add() {
   const file_link_ref = React.useRef(null);
   const comment_ref = React.useRef(null);
-  const [link, setLink] = useState("");
+
   const dispatch = useDispatch();
+  const date = new Date().toString().split(" ");
+  const days = date.reverse().join(" ");
+  const time = days.slice(18, 26);
+  const day = days.slice(27);
+  const now = day + " " + time;
+  const [link, setLink] = useState("");
 
   const selectFile = async (e) => {
     const upload = await uploadBytes(
@@ -53,6 +59,7 @@ function Add() {
       addSnsFB({
         img: link,
         comments: comment.value,
+        time: now,
       })
     );
   };

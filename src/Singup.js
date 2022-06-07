@@ -34,7 +34,7 @@ const Signup = () => {
         </Link>
 
         <Sign>
-          <Link to={"/add"} style={{ textDecoration: "none" }}>
+          <Link to={"/login"} style={{ textDecoration: "none" }}>
             <Text>로그인</Text>
           </Link>
         </Sign>

@@ -48,7 +48,7 @@ function YesLogin() {
             <Down>
               <Pimg src={require("./Pooh.png")} />
               <Name>name</Name>
-              <Time></Time>
+              <Time>{value.time}</Time>
               <Link
                 to={"/modify/" + value.id}
                 style={{ textDecoration: "none" }}

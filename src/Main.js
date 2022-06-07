@@ -32,7 +32,7 @@ function Main() {
         </Login>
       </Upper>
       {sns_list.map((value, index) => {
-        console.log(value);
+        const time = toString(value.time);
         return (
           <>
             <Down>
@@ -40,15 +40,16 @@ function Main() {
               {/* {user_list.map((v, i) => { */}
               <Name>name</Name>
               {/* })} */}
-              <Time>{value.Time}</Time>
+              <Time>{time}</Time>
             </Down>
-
-            <Downs>
-              <Nimg src={value.img} key={index} />
-              <Texts>
-                <Comments>{value.comments}</Comments>
-              </Texts>
-            </Downs>
+            <Link to={"/main"} style={{ textDecoration: "none" }}>
+              <Downs>
+                <Nimg src={value.img} key={index} />
+                <Texts>
+                  <Comments>{value.comments}</Comments>
+                </Texts>
+              </Downs>
+            </Link>
           </>
         );
       })}
@@ -180,6 +181,8 @@ const Texts = styled.div`
 const Comments = styled.p`
   min-width: 450px;
   max-width: 450px;
+  text-decoration: none;
+  color: black;
 `;
 
 export default Main;
